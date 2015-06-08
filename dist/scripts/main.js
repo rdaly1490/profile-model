@@ -1,21 +1,15 @@
 var newUser = new UserModel();
 
-window.onload = function() {
-		$.get ("http://tiny-pizza-server.herokuapp.com/collections/robd",
-		setHtml,
+$(document).ready(function() {
+
+$.get ("http://tiny-pizza-server.herokuapp.com/collections/robd/5575ef34a73f360300000146",
+		changeModel,
 		"json"
 		);
 
-	function setHtml(data) {
-		console.log(data[1]);
-		$(".profile-usertitle-name").html(data[1].name);
-		$(".dropdown .dropdown-toggle").html(data[1].name);
-		$(".profile-usertitle-job").html(data[1].role);
-		$(".profile-usertitle-email").html(data[1].email);
-	}
+function changeModel(data) {
+	newUser.set(data)
 }
-
-$(document).ready(function() {
 
 var App = Backbone.Router.extend({
 	routes: {
@@ -49,11 +43,13 @@ function updateUser(UserModel) {
 		email: UserModel.get("email"),
 		role: UserModel.get("role")
 	};
-	$.post
-	("http://tiny-pizza-server.herokuapp.com/collections/robd",
-	myObj,
-	"json"
-	);
+		
+	$.ajax({
+	url: 'http://tiny-pizza-server.herokuapp.com/collections/robd/5575ef34a73f360300000146',
+	type: 'PUT',
+	data: myObj,
+	});
+
 
 }
 
@@ -66,21 +62,6 @@ $(".form-horizontal").on("submit", function(e) {
 	});
 
 });
-
-// window.onload = function() {
-// 				$.get ("http://tiny-pizza-server.herokuapp.com/collections/robd",
-// 			setHtml,
-// 			"json"
-// 			);
-
-// 	function setHtml(data) {
-// 		console.log(data[1]);
-// 		$(".profile-usertitle-name").html(data[1].name);
-// 		$(".dropdown .dropdown-toggle").html(data[1].name);
-// 		$(".profile-usertitle-job").html(data[1].role);
-// 		$(".profile-usertitle-email").html(data[1].email);
-// 	}
-// }
 
 
 });
